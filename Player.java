@@ -1,19 +1,17 @@
 import java.awt.event.KeyEvent;
 public class Player {
-    public boolean forward,back,left,right;
-    public boolean normalAttack,AOE,ultimate;
-    public String melee,ranged,support;
-    public void keyPressed(KeyEvent key) {
-        if (key.getKeyCode() == key.VK_KP_UP) forward = true;
-        if (key.getKeyCode() == key.VK_KP_DOWN) back = true;
-        if (key.getKeyCode() == key.VK_KP_LEFT) left = true;
-        if (key.getKeyCode() == key.VK_KP_RIGHT) right = true;
+    protected boolean forward,back,left,right;
+    protected boolean normalAttack,AOE,ultimate;
+    protected double moveSpeed = 0.5;
+    protected int x,y,xDir,yDir;
+    public Player(){}
+    public Player(String type) {
+        type(type);
     }
-    public void keyReleased(KeyEvent key) {
-        if (key.getKeyCode() == key.VK_KP_UP) forward = false;
-        if (key.getKeyCode() == key.VK_KP_DOWN) back = false;
-        if (key.getKeyCode() == key.VK_KP_LEFT) left = false;
-        if (key.getKeyCode() == key.VK_KP_RIGHT) right = false;
+    public void type(String type) {
+        if (type == "melee") new Melee();
+        if (type == "ranged") new Ranged();
+        if (type == "support") new Support();
     }
-
+    
 }
