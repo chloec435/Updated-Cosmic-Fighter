@@ -16,6 +16,7 @@ public class Player {
         if (type == "ranged") new Ranged();
         if (type == "support") new Support();
     }
+    //https://medium.com/@niiicolai/an-introduction-to-movement-in-2d-games-281ff3b58533
     public void movement(int x, int y) {
         if (forward) {
             xPos = 
