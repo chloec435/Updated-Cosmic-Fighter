@@ -3,8 +3,8 @@ public class Player {
     protected boolean forward,back,left,right;
     protected boolean normalAttack,AOE,ultimate;
     protected double moveSpeed = 0.5;
-    protected float xPos,yPos;
-    protected float xDir = 1, yDir = 0;
+    protected float yPos, xPos;
+    protected float yDir = 1, xDir = 0;
     protected int[][] map;
     public Player(){}
     public Player(String type, int[][] mapping) {
@@ -17,18 +17,27 @@ public class Player {
         if (type == "support") new Support();
     }
     //https://medium.com/@niiicolai/an-introduction-to-movement-in-2d-games-281ff3b58533
-    public void movement(int x, int y) {
-        if (forward) {
-            xPos = 
+    public void movement() {
+        if(forward) {
+            //checks next row
+            if(map[(int)(yPos + yDir * moveSpeed)][(int) xPos] == 0) {
+                yPos += yDir * moveSpeed;
+            }
         }
-        if (back) {
-
+        if(back) {
+            if(map[(int)(yPos - yDir * moveSpeed)][(int) xPos] == 0) {
+                yPos -= yDir * moveSpeed;
+            }
         }
         if (left) {
-
+            if(map[(int) yPos][(int)(xPos + xDir * moveSpeed)] ==0) {
+                xPos += xDir * moveSpeed;
+            }
         }
         if (right) {
-
+            if(map[(int) yPos][(int)(xPos + xDir * moveSpeed)] == 0) {
+                xPos -= yDir * moveSpeed;
+            }
         }
     }
 }
