@@ -18,26 +18,27 @@ public class Player {
     }
     //https://medium.com/@niiicolai/an-introduction-to-movement-in-2d-games-281ff3b58533
     public void movement() {
-        if(forward) {
+        if (forward) {
             //checks next row
-            if(map[(int)(yPos + yDir * moveSpeed)][(int) xPos] == 0) {
+            if (map[ (int) (yPos + yDir * moveSpeed) ][ (int) xPos ] == 0) {
                 yPos += yDir * moveSpeed;
             }
         }
-        if(back) {
-            if(map[(int)(yPos - yDir * moveSpeed)][(int) xPos] == 0) {
+        if (back) {
+            if (map[ (int) (yPos - yDir * moveSpeed) ][ (int) xPos ] == 0) {
                 yPos -= yDir * moveSpeed;
             }
         }
         if (left) {
-            if(map[(int) yPos][(int)(xPos + xDir * moveSpeed)] ==0) {
+            if (map[ (int) yPos][ (int) (xPos + xDir * moveSpeed) ] == 0) {
                 xPos += xDir * moveSpeed;
             }
         }
         if (right) {
-            if(map[(int) yPos][(int)(xPos + xDir * moveSpeed)] == 0) {
+            if (map[ (int) yPos][ (int) (xPos + xDir * moveSpeed) ] == 0) {
                 xPos -= yDir * moveSpeed;
             }
         }
     }
+    public void
 }
