@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent;
 public class Melee extends Player {
     public Melee() {
         super();
+        super.movement();
     }
     public void keyPressed(KeyEvent key) {
         if (key.getKeyCode() == key.VK_W) forward = true;
