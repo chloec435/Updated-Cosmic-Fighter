@@ -1,7 +1,7 @@
 import java.awt.event.KeyEvent;
 public class Player {
     protected boolean forward,back,left,right;
-    protected boolean normalAttack,AOE,ultimate;
+    protected boolean normal,skill,ultimate;
     protected double moveSpeed = 0.5;
     protected float yPos, xPos;
     protected float yDir = 1, xDir = 0;
@@ -40,5 +40,15 @@ public class Player {
             }
         }
     }
-    public void
+    public void skills() {
+        if (ultimate) {
+
+        }
+        if (skill) {
+
+        }
+        if (normal) {
+
+        }
+    }
 }
