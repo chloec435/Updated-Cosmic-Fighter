@@ -1,25 +1,28 @@
 import java.awt.event.KeyEvent;
 
 public class Ranged extends Player {
+    private int code;
     public Ranged() {
         super();
+        movement();
     }
     public void keyPressed(KeyEvent key) {
-        if (key.getKeyCode() == key.VK_NUMPAD8) forward = true;
-        if (key.getKeyCode() == key.VK_NUMPAD2) back = true;
-        if (key.getKeyCode() == key.VK_NUMPAD4) left = true;
-        if (key.getKeyCode() == key.VK_NUMPAD6) right = true;
-        if (key.getKeyCode() == key.VK_NUMPAD9) ultimate = true;
-        if (key.getKeyCode() == key.VK_NUMPAD7) skill = true;
-        if (key.getKeyCode() == key.VK_NUMPAD0) normal = true;
+        code = key.getKeyCode();
+        if (code == key.VK_NUMPAD8) forward = true;
+        if (code == key.VK_NUMPAD2) back = true;
+        if (code == key.VK_NUMPAD4) left = true;
+        if (code == key.VK_NUMPAD6) right = true;
+        if (code == key.VK_NUMPAD9) ultimate = true;
+        if (code == key.VK_NUMPAD7) skill = true;
+        if (code == key.VK_NUMPAD0) normal = true;
     }
     public void keyReleased(KeyEvent key) {
-        if (key.getKeyCode() == key.VK_NUMPAD8) forward = false;
-        if (key.getKeyCode() == key.VK_NUMPAD2) back = false;
-        if (key.getKeyCode() == key.VK_NUMPAD4) left = false;
-        if (key.getKeyCode() == key.VK_NUMPAD6) right = false;
-        if (key.getKeyCode() == key.VK_NUMPAD9) ultimate = false;
-        if (key.getKeyCode() == key.VK_NUMPAD7) skill = false;
-        if (key.getKeyCode() == key.VK_NUMPAD0) normal = false;
+        if (code == key.VK_NUMPAD8) forward = false;
+        if (code == key.VK_NUMPAD2) back = false;
+        if (code == key.VK_NUMPAD4) left = false;
+        if (code == key.VK_NUMPAD6) right = false;
+        if (code == key.VK_NUMPAD9) ultimate = false;
+        if (code == key.VK_NUMPAD7) skill = false;
+        if (code == key.VK_NUMPAD0) normal = false;
     }
 }
