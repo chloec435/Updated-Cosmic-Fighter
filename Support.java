@@ -1,25 +1,28 @@
 import java.awt.event.KeyEvent;
-
 public class Support extends Player {
+    private int code;
     public Support() {
         super();
+        movement();
     }
     public void keyPressed(KeyEvent key) {
-        if (key.getKeyCode() == key.VK_KP_UP) forward = true;
-        if (key.getKeyCode() == key.VK_KP_DOWN) back = true;
-        if (key.getKeyCode() == key.VK_KP_LEFT) left = true;
-        if (key.getKeyCode() == key.VK_KP_RIGHT) right = true;
-        if (key.getKeyCode() == key.VK_J) ultimate = true;
-        if (key.getKeyCode() == key.VK_K) skill = true;
-        if (key.getKeyCode() == key.VK_L) normal = true;
+        code = key.getKeyCode();
+        if (code == key.VK_KP_UP) forward = true;
+        if (code == key.VK_KP_DOWN) back = true;
+        if (code == key.VK_KP_LEFT) left = true;
+        if (code == key.VK_KP_RIGHT) right = true;
+        if (code == key.VK_J) ultimate = true;
+        if (code == key.VK_K) skill = true;
+        if (code == key.VK_L) normal = true;
     }
     public void keyReleased(KeyEvent key) {
-        if (key.getKeyCode() == key.VK_KP_UP) forward = false;
-        if (key.getKeyCode() == key.VK_KP_DOWN) back = false;
-        if (key.getKeyCode() == key.VK_KP_LEFT) left = false;
-        if (key.getKeyCode() == key.VK_KP_RIGHT) right = false;
-        if (key.getKeyCode() == key.VK_J) ultimate = false;
-        if (key.getKeyCode() == key.VK_K) skill = false;
-        if (key.getKeyCode() == key.VK_L) normal = false;
+        code = key.getKeyCode();
+        if (code == key.VK_KP_UP) forward = false;
+        if (code == key.VK_KP_DOWN) back = false;
+        if (code == key.VK_KP_LEFT) left = false;
+        if (code == key.VK_KP_RIGHT) right = false;
+        if (code == key.VK_J) ultimate = false;
+        if (code == key.VK_K) skill = false;
+        if (code == key.VK_L) normal = false;
     }
 }
