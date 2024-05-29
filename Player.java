@@ -19,7 +19,6 @@ public class Player {
     //https://medium.com/@niiicolai/an-introduction-to-movement-in-2d-games-281ff3b58533
     public void movement() {
         if (forward) {
-            //checks next row
             if (map[ (int) (yPos + yDir * moveSpeed) ][ (int) xPos ] == 0) {
                 yPos += yDir * moveSpeed;
             }
@@ -40,15 +39,5 @@ public class Player {
             }
         }
     }
-    public void skills() {
-        if (ultimate) {
 
-        }
-        if (skill) {
-
-        }
-        if (normal) {
-
-        }
-    }
 }
