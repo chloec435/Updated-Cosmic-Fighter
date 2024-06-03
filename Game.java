@@ -35,22 +35,22 @@ public class Game extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        Component b1 = new JButton("b1");
-        Component b2 = new JButton("b2");
-        Component b3 = new JButton("b3");
-        Component b4 = new JButton("b4");
+        JButton b1 = new JButton("b1");
+        JButton b2 = new JButton("b2");
+        JButton b3 = new JButton("b3");
+        b1.setPreferredSize(new Dimension(50,50));
+        ImageIcon threeDash = new ImageIcon("Images/Hamburger_icon.svg.png");
+        threeDash.
+        b1.setIcon(threeDash);
         add(b1);
         add(b2);
         add(b3);
-        add(b4);
-        layout.putConstraint(SpringLayout.WEST, b1, 25, SpringLayout.WEST, getContentPane());
-        layout.putConstraint(SpringLayout.NORTH, b1, 10, SpringLayout.NORTH, getContentPane());
+        layout.putConstraint(SpringLayout.EAST, b1, -5, SpringLayout.EAST, getContentPane());
+        layout.putConstraint(SpringLayout.NORTH, b1, 5, SpringLayout.NORTH, getContentPane());
         layout.putConstraint(SpringLayout.WEST, b2, 50, SpringLayout.WEST, getContentPane());
         layout.putConstraint(SpringLayout.NORTH, b2, 10, SpringLayout.SOUTH, b1);
         layout.putConstraint(SpringLayout.WEST, b3, 75, SpringLayout.WEST, getContentPane());
         layout.putConstraint(SpringLayout.NORTH, b3, 10, SpringLayout.SOUTH, b2);
-        layout.putConstraint(SpringLayout.WEST, b4, 15, SpringLayout.EAST, b1);
-        layout.putConstraint(SpringLayout.NORTH, b4, 10, SpringLayout.NORTH, getContentPane());
     }
     public static void main (String[] args) {
         Game game = new Game();
