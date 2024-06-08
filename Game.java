@@ -1,32 +1,17 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Game extends JFrame {
-    private JFrame frame;
-    private int map[][];
+    private int[] map;
+    private int[] pixels;
+    private BufferedImage[] images;
     public Game() {
         startingScreen();
-//        topPanel();
         setVisible(true);
-        // main window 
-        // Function to set the default look  
-        // and feel decorated status of JFrame.
-    }
-    public void topPanel() {
-//        JPanel top = new JPanel();
-//        top.setSize(1720,50);
-        SpringLayout layout = new SpringLayout();
-//        top.setLayout(layout);
-//        top.setBackground(Color.RED);
-//        getContentPane().add(top, BorderLayout.NORTH);
-        setLayout(layout);
-        JButton instructions = new JButton();
-        instructions.setBackground(Color.BLUE);
-        add(instructions);
-        layout.putConstraint(SpringLayout.EAST, instructions, 100, SpringLayout.EAST, getContentPane());
-        layout.putConstraint(SpringLayout.NORTH, instructions, 100, SpringLayout.NORTH, getContentPane());
-//        layout.putConstraint(SpringLayout.WEST, instructions, 50, SpringLayout.WEST, getContentPane());
-//        layout.putConstraint(SpringLayout.SOUTH, instructions, 50, SpringLayout.SOUTH, getContentPane());
     }
     public void startingScreen() {
         setSize(1720,960);
@@ -35,22 +20,45 @@ public class Game extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        JButton b1 = new JButton("b1");
-        JButton b2 = new JButton("b2");
-        JButton b3 = new JButton("b3");
-        b1.setPreferredSize(new Dimension(50,50));
-        ImageIcon threeDash = new ImageIcon("Images/Hamburger_icon.svg.png");
-        threeDash.
-        b1.setIcon(threeDash);
-        add(b1);
-        add(b2);
-        add(b3);
-        layout.putConstraint(SpringLayout.EAST, b1, -5, SpringLayout.EAST, getContentPane());
-        layout.putConstraint(SpringLayout.NORTH, b1, 5, SpringLayout.NORTH, getContentPane());
-        layout.putConstraint(SpringLayout.WEST, b2, 50, SpringLayout.WEST, getContentPane());
-        layout.putConstraint(SpringLayout.NORTH, b2, 10, SpringLayout.SOUTH, b1);
-        layout.putConstraint(SpringLayout.WEST, b3, 75, SpringLayout.WEST, getContentPane());
-        layout.putConstraint(SpringLayout.NORTH, b3, 10, SpringLayout.SOUTH, b2);
+        JButton menu = new JButton(); //creating menu button
+        menu.setPreferredSize(new Dimension(50,50));
+        menu.setBackground(Color.WHITE);
+        ImageIcon threeDash = new ImageIcon(new ImageIcon("Images/Three dash.png")
+                .getImage().getScaledInstance(40,40, Image.SCALE_SMOOTH));
+        menu.setIcon(threeDash);
+        menu.setBorder(new LineBorder(Color.BLACK, 3));
+        JButton play = new JButton(); //creating play button
+        play.setPreferredSize(new Dimension(500,100));
+        ImageIcon PLAY = new ImageIcon(new ImageIcon("Images/Play.png")
+                .getImage().getScaledInstance(500,100, Image.SCALE_SMOOTH));
+        play.setIcon(PLAY);
+        play.setBorderPainted(false);
+        play.setOpaque(false);
+        play.setContentAreaFilled(false);
+        JButton help = new JButton(); //creating help button
+        help.setPreferredSize(new Dimension(500,100));
+        ImageIcon HELP = new ImageIcon(new ImageIcon("Images/Help.png")
+                .getImage().getScaledInstance(500,100, Image.SCALE_SMOOTH));
+        help.setIcon(HELP);
+        help.setBorderPainted(false);
+        help.setOpaque(false);
+        help.setContentAreaFilled(false);
+        add(menu);
+        add(play);
+        add(help);
+        //setting layout for buttons
+        layout.putConstraint(SpringLayout.EAST, menu, -5, SpringLayout.EAST, getContentPane());
+        layout.putConstraint(SpringLayout.NORTH, menu, 5, SpringLayout.NORTH, getContentPane());
+        layout.putConstraint(SpringLayout.WEST, play, (getWidth()-500)/2, SpringLayout.WEST, getContentPane());
+        layout.putConstraint(SpringLayout.NORTH, play, (getHeight()-350)/2-55, SpringLayout.SOUTH, menu);
+        layout.putConstraint(SpringLayout.WEST, help, (getWidth()-500)/2, SpringLayout.WEST, getContentPane());
+        layout.putConstraint(SpringLayout.NORTH, help, 100, SpringLayout.SOUTH, play);
+    }
+    public void setMap() {
+        File tiles = new File("Images/Tiles.png");
+    }
+    public void setTiles(int x, int y) {
+
     }
     public static void main (String[] args) {
         Game game = new Game();
