@@ -68,20 +68,7 @@ public class Game {
         backgroundPanel.add(support);
         backgroundPanel.add(choose);
 
-//        SpringLayout layout = new SpringLayout();
-//        backgroundPanel.setLayout(layout);
         frame.setContentPane(backgroundPanel);
-//        int width = (frame.getWidth() - 1500) / 4;
-//        int height = (frame.getHeight() - 450) / 2;
-//
-//        layout.putConstraint(SpringLayout.WEST, choose, (frame.getWidth() - 1600) / 2, SpringLayout.WEST, backgroundPanel);
-//        layout.putConstraint(SpringLayout.NORTH, choose, 100, SpringLayout.NORTH, backgroundPanel);
-//        layout.putConstraint(SpringLayout.WEST, melee, width, SpringLayout.WEST, backgroundPanel);
-//        layout.putConstraint(SpringLayout.NORTH, melee, height, SpringLayout.NORTH, choose);
-//        layout.putConstraint(SpringLayout.WEST, ranged, width, SpringLayout.EAST, melee);
-//        layout.putConstraint(SpringLayout.NORTH, ranged, height, SpringLayout.NORTH, choose);
-//        layout.putConstraint(SpringLayout.WEST, support, width, SpringLayout.EAST, ranged);
-//        layout.putConstraint(SpringLayout.NORTH, support, height, SpringLayout.NORTH, choose);
 
         melee.addMouseListener(new MouseAdapter() {
             @Override
