@@ -188,26 +188,6 @@ public class Game {
 
         gameLoop();
     }
-//    public void spawnCharacters() throws IOException {
-//        switch (playerOne) {
-//            case "melee" -> one = new Melee(game);
-//            case "ranged" -> one = new Ranged(game);
-//            case "support" -> one = new Support(game);
-//        }
-//        switch (playerTwo) {
-//            case "melee" -> two = new Melee(game);
-//            case "ranged" -> two = new Ranged(game);
-//            case "support" -> two = new Support(game);
-//        }
-//        players.add(one);
-//        players.add(two);
-//        backgroundPanel.add(one);
-//        backgroundPanel.add(two);
-//        game.setContentPane(backgroundPanel);
-//        backgroundPanel.revalidate();
-//        backgroundPanel.repaint();
-//        gameLoop();
-//    }
     public void gameLoop() {
         if (!game.isShowing()) {
             return;
