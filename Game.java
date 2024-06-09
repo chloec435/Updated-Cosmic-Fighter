@@ -13,8 +13,9 @@ public class Game {
     private JPanel backgroundPanel, gameBackgroundPanel;
     private String playerOne, playerTwo;
     private JFrame frame, game;
-    private Player one, two;
-    private ArrayList<Player> players = new ArrayList<Player>();
+    private Character charOne, charTwo;
+    private Monster monster;
+    private final ArrayList<Character> characters = new ArrayList<Character>();
     public Game() throws IOException {
         frame();
         selection();
@@ -140,41 +141,43 @@ public class Game {
                 Startup main = new Startup();
             }
         });
+        monster = new Monster(game);
+        gameBackgroundPanel.add(monster);
         switch (playerOne) {
-            case "melee" -> one = new Melee(game);
-            case "ranged" -> one = new Ranged(game);
-            case "support" -> one = new Support(game);
+            case "melee" -> charOne = new Melee(game);
+            case "ranged" -> charOne = new Ranged(game);
+            case "support" -> charOne = new Support(game);
         }
         switch (playerTwo) {
-            case "melee" -> two = new Melee(game);
-            case "ranged" -> two = new Ranged(game);
-            case "support" -> two = new Support(game);
+            case "melee" -> charTwo = new Melee(game);
+            case "ranged" -> charTwo = new Ranged(game);
+            case "support" -> charTwo = new Support(game);
         }
         game.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                for (Player player : players) {
-                    player.keyPressed(e);
+                for (Character character : characters) {
+                    character.keyPressed(e);
                 }
             }
             @Override
             public void keyReleased(KeyEvent e) {
-                for (Player player : players) {
-                    player.keyReleased(e);
+                for (Character character : characters) {
+                    character.keyReleased(e);
                 }
             }
             @Override
             public void keyTyped(KeyEvent e) {
-                for (Player player : players) {
-                    player.keyTyped(e);
+                for (Character character : characters) {
+                    character.keyTyped(e);
                 }
             }
         });
 
-        players.add(one);
-        players.add(two);
-        gameBackgroundPanel.add(one);
-        gameBackgroundPanel.add(two);
+        characters.add(charOne);
+        characters.add(charTwo);
+        gameBackgroundPanel.add(charOne);
+        gameBackgroundPanel.add(charTwo);
         game.setContentPane(gameBackgroundPanel);
         gameBackgroundPanel.revalidate();
         gameBackgroundPanel.repaint();
@@ -185,8 +188,12 @@ public class Game {
         if (!game.isShowing()) {
             return;
         }
-        for (Player player : players) {
-            player.movement();
+        monster.startAttackTimer();
+        monster.path();
+        for (Character character : characters) {
+            character.movement();
+            character.dmgTaken(monster, monster.returnDamage());
+            monster.dmgTaken(character, character.returnDamage());
         }
         gameBackgroundPanel.repaint();
         Timer timer = new Timer(10, new ActionListener() {
