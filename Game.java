@@ -67,7 +67,22 @@ public class Game {
         backgroundPanel.add(ranged);
         backgroundPanel.add(support);
         backgroundPanel.add(choose);
+
+//        SpringLayout layout = new SpringLayout();
+//        backgroundPanel.setLayout(layout);
         frame.setContentPane(backgroundPanel);
+//        int width = (frame.getWidth() - 1500) / 4;
+//        int height = (frame.getHeight() - 450) / 2;
+//
+//        layout.putConstraint(SpringLayout.WEST, choose, (frame.getWidth() - 1600) / 2, SpringLayout.WEST, backgroundPanel);
+//        layout.putConstraint(SpringLayout.NORTH, choose, 100, SpringLayout.NORTH, backgroundPanel);
+//        layout.putConstraint(SpringLayout.WEST, melee, width, SpringLayout.WEST, backgroundPanel);
+//        layout.putConstraint(SpringLayout.NORTH, melee, height, SpringLayout.NORTH, choose);
+//        layout.putConstraint(SpringLayout.WEST, ranged, width, SpringLayout.EAST, melee);
+//        layout.putConstraint(SpringLayout.NORTH, ranged, height, SpringLayout.NORTH, choose);
+//        layout.putConstraint(SpringLayout.WEST, support, width, SpringLayout.EAST, ranged);
+//        layout.putConstraint(SpringLayout.NORTH, support, height, SpringLayout.NORTH, choose);
+
         melee.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -186,6 +201,26 @@ public class Game {
 
         gameLoop();
     }
+//    public void spawnCharacters() throws IOException {
+//        switch (playerOne) {
+//            case "melee" -> one = new Melee(game);
+//            case "ranged" -> one = new Ranged(game);
+//            case "support" -> one = new Support(game);
+//        }
+//        switch (playerTwo) {
+//            case "melee" -> two = new Melee(game);
+//            case "ranged" -> two = new Ranged(game);
+//            case "support" -> two = new Support(game);
+//        }
+//        players.add(one);
+//        players.add(two);
+//        backgroundPanel.add(one);
+//        backgroundPanel.add(two);
+//        game.setContentPane(backgroundPanel);
+//        backgroundPanel.revalidate();
+//        backgroundPanel.repaint();
+//        gameLoop();
+//    }
     public void gameLoop() {
         if (!game.isShowing()) {
             return;
