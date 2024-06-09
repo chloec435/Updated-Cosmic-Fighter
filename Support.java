@@ -1,25 +1,43 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Image;
+//import java.awt.Image;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
 public class Support extends Player {
     private int code;
-    private Image support;
+//    private Image support1;
+//    private Image support2;
+//    private Image currentImage;
+//    private Timer animation;
+//    private boolean switchImage = false;
     public Support(JFrame frame) throws IOException {
         super(frame);
         System.out.println("Support spawned");
         addKeyListener(this);
         setFocusable(true);
-        support = ImageIO.read(new File("Images/Support/Support.png"));
-        setIcon(new ImageIcon(new ImageIcon(support).getImage().
-                getScaledInstance(128, 128, Image.SCALE_SMOOTH)));
-        setSize(128, 128);
-        setLocation((int) xPos, (int) yPos);
-        setVisible(true);
+        image1 = ImageIO.read(new File("Images/Support/Support.png"));
+        image2 = ImageIO.read(new File("Images/Support/Support (1).png"));
+        image();
+//        currentImage = support1;
+//        setSize(frame.getWidth(), frame.getHeight());
+//        setLocation((int) xPos, (int) yPos);
+//        setVisible(true);
+//        image(support1);
+//        animation = new Timer(1000/2, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                switchImage = !switchImage;
+//                if (switchImage) currentImage = support1;
+//                else currentImage = support2;
+//                repaint();
+//            }
+//        });
+//        animation.start();
     }
     @Override
     public void keyPressed(KeyEvent e) {
@@ -62,6 +80,6 @@ public class Support extends Player {
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(support, (int)xPos, (int)yPos, 128, 128, null);
+        g.drawImage(currentImage, (int)xPos, (int)yPos, 128, 128, null);
     }
 }
