@@ -7,18 +7,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 public class Game {
     private BufferedImage background;
     private int clicks = 0;
-    private JPanel backgroundPanel;
-    private JPanel gameBackgroundPanel;
-    private String playerOne;
-    private String playerTwo;
-    private JFrame frame;
-    private JFrame game;
-    private Player one;
-    private Player two;
+    private JPanel backgroundPanel, gameBackgroundPanel;
+    private String playerOne, playerTwo;
+    private JFrame frame, game;
+    private Player one, two;
     private ArrayList<Player> players = new ArrayList<Player>();
     public Game() throws IOException {
         frame();
@@ -162,14 +157,12 @@ public class Game {
                     player.keyPressed(e);
                 }
             }
-
             @Override
             public void keyReleased(KeyEvent e) {
                 for (Player player : players) {
                     player.keyReleased(e);
                 }
             }
-
             @Override
             public void keyTyped(KeyEvent e) {
                 for (Player player : players) {
