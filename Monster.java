@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Monster extends Character {
-//    private int moveSpeed = 5;
+    private int moveSpeed = 5;
     private int xPos = 890/2, yPos = 200;
     private int skillDmg = 50, hp = 1000;
     private Timer attackTimer;
@@ -46,22 +46,22 @@ public class Monster extends Character {
     public void startAttackTimer() {
         attackTimer.start();
     }
-//    public void path() {
-//        if (xPos >= frame.getWidth() - getWidth()) {
-//            xDir = -1;
-//        } else if (xPos <= 0) {
-//            xDir = 1;
-//        }
-//        xPos += xDir * moveSpeed;
-//        if (yPos >= frame.getHeight() - getHeight()) {
-//            yDir = -1;
-//        } else if (yPos <= 0) {
-//            yDir = 1;
-//        }
-//        yPos += yDir * moveSpeed;
-//        setLocation(xPos, yPos);
-//        repaint();
-//    }
+    public void path() {
+        if (xPos >= frame.getWidth() - getWidth()) {
+            xDir = -1;
+        } else if (xPos <= 0) {
+            xDir = 1;
+        }
+        xPos += xDir * moveSpeed;
+        if (yPos >= frame.getHeight() - getHeight()) {
+            yDir = -1;
+        } else if (yPos <= 0) {
+            yDir = 1;
+        }
+        yPos += yDir * moveSpeed;
+        setLocation(xPos, yPos);
+        repaint();
+    }
     public void dmgTaken(Character other, int dmgTaken) {
         Timer checkCollision = new Timer(100, new ActionListener() {
             @Override
