@@ -1,6 +1,5 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 //import java.awt.Image;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
@@ -8,8 +7,9 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class Support extends Player {
+public class Support extends Character {
     private int code;
+    private int normalDmg = 5;
 //    private Image support1;
 //    private Image support2;
 //    private Image currentImage;
@@ -20,9 +20,12 @@ public class Support extends Player {
         System.out.println("Support spawned");
         addKeyListener(this);
         setFocusable(true);
-        image1 = ImageIO.read(new File("Images/Support/Support.png"));
-        image2 = ImageIO.read(new File("Images/Support/Support (1).png"));
-        image();
+        normal = ImageIO.read(new File("Images/Support/Support.png"));
+        attack1 = ImageIO.read(new File("Images/Support/Support.png"));
+        attack2 = ImageIO.read(new File("Images/Support/Support (1).png"));
+        skill1 = ImageIO.read(new File("Images/Support/Support Heal.png"));
+        skill2 = ImageIO.read(new File("Images/Support/Support (1).png"));
+        animate(normal, normal, 1);
 //        currentImage = support1;
 //        setSize(frame.getWidth(), frame.getHeight());
 //        setLocation((int) xPos, (int) yPos);
@@ -60,8 +63,16 @@ public class Support extends Player {
         if (code == KeyEvent.VK_LEFT) left = true;
         if (code == KeyEvent.VK_RIGHT) right = true;
         if (code == KeyEvent.VK_NUMPAD3) ultimate = true;
-        if (code == KeyEvent.VK_NUMPAD2) skill = true;
-        if (code == KeyEvent.VK_NUMPAD1) normal = true;
+        if (code == KeyEvent.VK_NUMPAD2 && !onCD) {
+            skill = true;
+            skillSet(4);
+            startCD();
+        }
+        if (code == KeyEvent.VK_NUMPAD1 && !skillRunning && !attackRunning) {
+            attack = true;
+            dmg = normalDmg;
+            attackSet(4);
+        }
     }
     public void handleKeyReleased(KeyEvent key) {
         code = key.getKeyCode();
@@ -70,16 +81,20 @@ public class Support extends Player {
         if (code == KeyEvent.VK_LEFT) left = false;
         if (code == KeyEvent.VK_RIGHT) right = false;
         if (code == KeyEvent.VK_NUMPAD3) ultimate = false;
-        if (code == KeyEvent.VK_NUMPAD2) skill = false;
-        if (code == KeyEvent.VK_NUMPAD1) normal = false;
+        if (code == KeyEvent.VK_NUMPAD2) {
+            delayFromSkill(normal, normal, 2000,1);
+        }
+        if (code == KeyEvent.VK_NUMPAD1) {
+            delayFromAttack(normal, normal, 2000,1);
+        }
     }
     public void handleKeyTyped(KeyEvent e) {
     }
     public void movement() {
         super.movement();
     }
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(currentImage, (int)xPos, (int)yPos, 128, 128, null);
-    }
+//    public void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        g.drawImage(currentImage, (int)xPos, (int)yPos, 128, 128, null);
+//    }
 }
