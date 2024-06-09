@@ -3,11 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
-public class Melee extends Player implements KeyListener {
+public class Melee extends Player {
     private int code;
     private Image melee;
     public Melee(JFrame frame) throws IOException {
@@ -16,8 +15,27 @@ public class Melee extends Player implements KeyListener {
         addKeyListener(this);
         setFocusable(true);
         melee = ImageIO.read(new File("Images/Melee/Shuriken.png"));
+        setIcon(new ImageIcon(new ImageIcon(melee).getImage().
+                getScaledInstance(128, 128, Image.SCALE_SMOOTH)));
+        setSize(128, 128);
+        setLocation((int) xPos, (int) yPos);
+        setVisible(true);
     }
-    public void keyPressed(KeyEvent key) {
+    @Override
+    public void keyPressed(KeyEvent e) {
+        handleKeyPressed(e);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        handleKeyReleased(e);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        handleKeyTyped(e);
+    }
+    public void handleKeyPressed(KeyEvent key) {
         code = key.getKeyCode();
         if (code == KeyEvent.VK_W) forward = true;
         if (code == KeyEvent.VK_S) back = true;
@@ -27,7 +45,7 @@ public class Melee extends Player implements KeyListener {
         if (code == KeyEvent.VK_E) skill = true;
         if (code == KeyEvent.VK_SPACE) normal = true;
     }
-    public void keyReleased(KeyEvent key) {
+    public void handleKeyReleased(KeyEvent key) {
         code = key.getKeyCode();
         if (code == KeyEvent.VK_W) forward = false;
         if (code == KeyEvent.VK_S) back = false;
@@ -37,10 +55,13 @@ public class Melee extends Player implements KeyListener {
         if (code == KeyEvent.VK_E) skill = false;
         if (code == KeyEvent.VK_SPACE) normal = false;
     }
-    public void keyTyped(KeyEvent e) {
+    public void handleKeyTyped(KeyEvent e) {
+    }
+    public void movement() {
+        super.movement();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(melee, (int)xPos, (int)yPos, 64, 64, null);
+        g.drawImage(melee, (int)xPos, (int)yPos, 128, 128, null);
     }
 }
