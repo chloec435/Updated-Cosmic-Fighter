@@ -3,20 +3,30 @@ import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Support extends Character {
     private int code;
     private int normalDmg = 5;
-    public Support(JFrame frame) throws IOException {
+    private ArrayList<Character> characters;
+    public Support(JFrame frame, ArrayList<Character> characters) throws IOException {
         super(frame);
+        this.characters = characters;
         System.out.println("Support spawned");
         addKeyListener(this);
         setFocusable(true);
+        normal = scaleImage(ImageIO.read(new File("Images/Support/Support.png")));
         attack1 = scaleImage(ImageIO.read(new File("Images/Support/Support.png")));
         attack2 = scaleImage(ImageIO.read(new File("Images/Support/Support (1).png")));
         skill1 = scaleImage(ImageIO.read(new File("Images/Support/Support Heal.png")));
         skill2 = scaleImage(ImageIO.read(new File("Images/Support/Support (1).png")));
+        width = 256; height = 256;
         animate(normal, normal, 1);
+    }
+    public void healAll() {
+        for (Character character : characters) {
+            character.heal(heal);
+        }
     }
     @Override
     public void keyPressed(KeyEvent e) {
@@ -41,6 +51,7 @@ public class Support extends Character {
         if (code == KeyEvent.VK_NUMPAD3) ultimate = true;
         if (code == KeyEvent.VK_NUMPAD2 && !onCD) {
             skill = true;
+            healAll();
             skillSet(4);
             startCD();
         }
@@ -61,7 +72,6 @@ public class Support extends Character {
             delayFromSkill(normal, normal, 2000,1);
         }
         if (code == KeyEvent.VK_NUMPAD1) {
-            attack = false;
             delayFromAttack(normal, normal, 2000,1);
         }
     }
