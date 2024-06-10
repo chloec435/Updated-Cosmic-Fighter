@@ -1,8 +1,5 @@
 import javax.imageio.ImageIO;
-import javax.swing.*;
-//import java.awt.Image;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -10,11 +7,6 @@ import java.io.IOException;
 public class Support extends Character {
     private int code;
     private int normalDmg = 5;
-//    private Image support1;
-//    private Image support2;
-//    private Image currentImage;
-//    private Timer animation;
-//    private boolean switchImage = false;
     public Support(JFrame frame) throws IOException {
         super(frame);
         System.out.println("Support spawned");
@@ -26,21 +18,6 @@ public class Support extends Character {
         skill1 = ImageIO.read(new File("Images/Support/Support Heal.png"));
         skill2 = ImageIO.read(new File("Images/Support/Support (1).png"));
         animate(normal, normal, 1);
-//        currentImage = support1;
-//        setSize(frame.getWidth(), frame.getHeight());
-//        setLocation((int) xPos, (int) yPos);
-//        setVisible(true);
-//        image(support1);
-//        animation = new Timer(1000/2, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                switchImage = !switchImage;
-//                if (switchImage) currentImage = support1;
-//                else currentImage = support2;
-//                repaint();
-//            }
-//        });
-//        animation.start();
     }
     @Override
     public void keyPressed(KeyEvent e) {
@@ -85,6 +62,7 @@ public class Support extends Character {
             delayFromSkill(normal, normal, 2000,1);
         }
         if (code == KeyEvent.VK_NUMPAD1) {
+            attack = false;
             delayFromAttack(normal, normal, 2000,1);
         }
     }
@@ -93,8 +71,4 @@ public class Support extends Character {
     public void movement() {
         super.movement();
     }
-//    public void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        g.drawImage(currentImage, (int)xPos, (int)yPos, 128, 128, null);
-//    }
 }
