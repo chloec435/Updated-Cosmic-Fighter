@@ -148,9 +148,6 @@ public class Game {
                 Startup main = new Startup();
             }
         });
-        monster = new Monster(game);
-//        characters.add(monster);
-        gameBackgroundPanel.add(monster);
         switch (playerOne) {
             case "melee" -> charOne = new Melee(game);
             case "ranged" -> charOne = new Ranged(game);
@@ -181,31 +178,28 @@ public class Game {
                 }
             }
         });
-
+        monster = new Monster(game);
         characters.add(charOne);
         characters.add(charTwo);
         gameBackgroundPanel.add(charOne);
         gameBackgroundPanel.add(charTwo);
+        gameBackgroundPanel.add(monster);
         game.setContentPane(gameBackgroundPanel);
         gameBackgroundPanel.revalidate();
         gameBackgroundPanel.repaint();
-
         gameLoop();
     }
     public void gameLoop() {
         if (!game.isShowing()) {
             return;
         }
-//        monster.startAttackTimer();
-//        monster.path();
         for (Character character : characters) {
             character.checkHp();
             monster.checkHp();
-            System.out.println(character.checkHp());
-            System.out.println(monster.checkHp());
+//            System.out.println("Character: " + character + " Hp: " + character.checkHp());
+            System.out.println("Monster Hp: " + monster.checkHp());
             character.movement();
-//            character.dmgTaken(monster, monster.returnDamage());
-//            monster.dmgTaken(character, character.returnDamage());
+            monster.dmgTaken(character, character.returnDamage());
         }
         monster.movement();
         monster.attackPlayers(charOne, charTwo);
