@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Color;
 
 public abstract class Character extends JLabel implements KeyListener {
     protected boolean forward,back,left,right;
@@ -18,6 +19,7 @@ public abstract class Character extends JLabel implements KeyListener {
     protected int yDir = 1, xDir = 1;
     protected int dmg, heal = 50;
     protected double hp = 200.00;
+    protected int width, height;
     protected JFrame frame;
     protected Image currentImage;
     protected Image normal, attack1, attack2, skill1, skill2;
@@ -108,35 +110,46 @@ public abstract class Character extends JLabel implements KeyListener {
     public void skillSet(int frames) {
         if (skill) {
             skillRunning = true;
+            attackRunning = false;
             animate(skill1, skill2, frames);
         }
     }
     public void attackSet(int frames) {
         if (attack) {
             attackRunning = true;
+            skillRunning = false;
             animate(attack1, attack2, frames);
         }
     }
-//    public void dmgTaken(Character other, int dmgTaken) {
-//        if (isTouching(other)) {
-//            hp -= dmgTaken;
-//            System.out.println("Damage taken: " + dmgTaken + ", Current HP: " + hp);
-//        }
-//    }
+    public void dmgTaken(Character other, int dmgTaken) {
+        if (isTouching(other)) {
+            hp -= dmgTaken;
+            System.out.println("Character damage taken: " + dmgTaken + ", Character current HP: " + hp);
+        }
+    }
+    public void heal(int amount) {
+        if (hp < 200) {
+            double toMaxHp = 200-hp;
+            if (toMaxHp <= 50) {
+                hp = 200;
+            } else {
+                hp += heal;
+            }
+        }
+        System.out.println("Character healed: " + amount + ", Character current HP: " + hp);
+    }
     public double checkHp() {
+        System.out.println("Character Hp: " + hp);
         if (this.hp <= 0) {
             frame.remove(this);
         }
         return hp;
     }
     public Rectangle getBoundingBox() {
-        return new Rectangle(xPos, yPos, currentImage.getWidth(null),
-                currentImage.getHeight(null));
+        return new Rectangle(xPos, yPos, width, height);
     }
     public boolean isTouching(Character other) {
-        boolean touching = getBoundingBox().intersects(other.getBoundingBox());
-        System.out.println("Collision detected: " + touching);
-        return touching;
+        return getBoundingBox().intersects(other.getBoundingBox());
     }
     public int returnDamage() {
         return dmg;
@@ -163,7 +176,16 @@ public abstract class Character extends JLabel implements KeyListener {
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(currentImage, xPos, yPos, currentImage.getWidth(null),
-                currentImage.getHeight(null), null);
+        int imageWidth = currentImage.getWidth(null);
+        int imageHeight = currentImage.getHeight(null);
+        int centerX = getWidth() / 2;
+        int centerY = getHeight() / 2;
+        int imageX = centerX - (imageWidth / 2);
+        int imageY = centerY - (imageHeight / 2);
+        g.drawImage(currentImage, imageX, imageY, imageWidth, imageHeight, null);
+        int rectX = imageX - (width - imageWidth) / 2;
+        int rectY = imageY - (height - imageHeight) / 2;
+        g.setColor(Color.WHITE);
+        g.drawRect(rectX, rectY, width, height);
     }
 }
