@@ -1,5 +1,8 @@
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.Timer;
+import java.awt.Rectangle;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +16,8 @@ public abstract class Character extends JLabel implements KeyListener {
     protected int moveSpeed = 2;
     protected int yPos = 400, xPos = 890/2;
     protected int yDir = 1, xDir = 1;
-    protected int dmg, heal = 50, hp = 200;
+    protected int dmg, heal = 50;
+    protected double hp = 200.00;
     protected JFrame frame;
     protected Image currentImage;
     protected Image normal, attack1, attack2, skill1, skill2;
@@ -57,7 +61,7 @@ public abstract class Character extends JLabel implements KeyListener {
             animation.stop();
         }
         currentImage = first;
-        animation = new Timer(1000/frames, new ActionListener() {
+        animation = new Timer(100/frames, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 switchImage = !switchImage;
@@ -129,6 +133,12 @@ public abstract class Character extends JLabel implements KeyListener {
             }
         });
         checkCollision.start();
+    }
+    public double checkHp() {
+        if (this.hp <= 0) {
+            frame.remove(this);
+        }
+        return hp;
     }
     public Rectangle getBoundingBox() {
         return new Rectangle(xPos, yPos, currentImage.getWidth(null),
