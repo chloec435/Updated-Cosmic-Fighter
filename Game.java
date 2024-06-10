@@ -31,7 +31,7 @@ public class Game {
     private final ArrayList<Character> characters = new ArrayList<Character>();
     public Game() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         theme = AudioSystem.getClip();
-        theme.open(AudioSystem.getAudioInputStream(new File("Images/Audio/Game Music.wav")));
+        theme.open(AudioSystem.getAudioInputStream(new File("Audio/Game Music.wav")));
         frame();
         selection();
         frame.setVisible(true);
@@ -258,7 +258,7 @@ public class Game {
         end.setOpaque(false);
         if (triumph) {
             Clip triumphMusic = AudioSystem.getClip();
-            triumphMusic.open(AudioSystem.getAudioInputStream(new File("Images/Audio/Triumph Music.wav")));
+            triumphMusic.open(AudioSystem.getAudioInputStream(new File("Audio/Triumph Music.wav")));
             currentClip = triumphMusic;
             triumphMusic.loop(Clip.LOOP_CONTINUOUSLY);
             triumphMusic.start();
@@ -266,7 +266,7 @@ public class Game {
                     .getImage().getScaledInstance(end.getWidth(), end.getHeight(), Image.SCALE_SMOOTH)));
         } else {
             Clip defeatMusic = AudioSystem.getClip();
-            defeatMusic.open(AudioSystem.getAudioInputStream(new File("Images/Audio/Defeat Music.wav")));
+            defeatMusic.open(AudioSystem.getAudioInputStream(new File("Audio/Defeat Music.wav")));
             currentClip = defeatMusic;
             defeatMusic.loop(Clip.LOOP_CONTINUOUSLY);
             defeatMusic.start();
