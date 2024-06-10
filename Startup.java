@@ -1,18 +1,15 @@
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.SpringLayout;
+import javax.swing.ImageIcon;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class Startup extends JFrame {
-    private int[] map;
-    private int[] pixels;
-    private BufferedImage[] images;
     private JButton play;
     private JButton help;
     public Startup() {
@@ -65,18 +62,6 @@ public class Startup extends JFrame {
         });
     }
     public void help() {}
-
-    public void setMap() throws IOException {
-        File tiles = new File("Images/Tiles.png");
-        BufferedImage TILES = ImageIO.read(tiles);
-        int tilesWidth = TILES.getWidth();
-        int tilesHeight = TILES.getHeight();
-        pixels = new int[tilesWidth*tilesHeight];
-        TILES.getRGB(0, 0, tilesWidth, tilesHeight, pixels, 0, tilesWidth);
-    }
-    public void setTiles(int x, int y) {
-
-    }
     public static void main (String[] args) {
         Startup startup = new Startup();
     }
