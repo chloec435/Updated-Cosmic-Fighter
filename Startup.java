@@ -21,7 +21,7 @@ public class Startup extends JFrame {
         play();
         setVisible(true);
         introMusic = AudioSystem.getClip();
-        introMusic.open(AudioSystem.getAudioInputStream(new File("Images/Audio/Intro Music.wav")));
+        introMusic.open(AudioSystem.getAudioInputStream(new File("Audio/Intro Music.wav")));
         introMusic.loop(Clip.LOOP_CONTINUOUSLY);
         introMusic.start();
     }
