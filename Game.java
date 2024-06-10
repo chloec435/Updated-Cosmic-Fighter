@@ -1,4 +1,8 @@
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Graphics;
@@ -21,16 +25,25 @@ public class Game {
     private String playerOne, playerTwo;
     private JFrame frame, game;
     private Character charOne, charTwo;
+    private Clip theme, currentClip;
     private Monster monster;
+    private boolean triumph = true, running = true;
     private final ArrayList<Character> characters = new ArrayList<Character>();
-    public Game() throws IOException {
+    public Game() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        theme = AudioSystem.getClip();
+        theme.open(AudioSystem.getAudioInputStream(new File("Images/Audio/Game Music.wav")));
         frame();
         selection();
         frame.setVisible(true);
         frame.addWindowListener(new java.awt.event.WindowAdapter()  {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                Startup main = new Startup();
+                try {
+                    theme.stop();
+                    Startup main = new Startup();
+                } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
@@ -81,7 +94,7 @@ public class Game {
                 System.out.println("Melee clicked");
                 try {
                     checkClicks("melee");
-                } catch (InterruptedException | IOException ex) {
+                } catch (InterruptedException | IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -94,7 +107,7 @@ public class Game {
                 System.out.println("Ranged clicked");
                 try {
                     checkClicks("ranged");
-                } catch (InterruptedException | IOException ex) {
+                } catch (InterruptedException | IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -107,13 +120,13 @@ public class Game {
                 System.out.println("Support clicked");
                 try {
                     checkClicks("support");
-                } catch (InterruptedException | IOException ex) {
+                } catch (InterruptedException | IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
     }
-    public void checkClicks(String type) throws InterruptedException, IOException {
+    public void checkClicks(String type) throws InterruptedException, IOException, UnsupportedAudioFileException, LineUnavailableException {
         if (clicks == 1) {
             playerOne = type;
             JOptionPane.showMessageDialog(backgroundPanel, "Player 1 will be " + type + ".",
@@ -122,11 +135,15 @@ public class Game {
             playerTwo = type;
             JOptionPane.showMessageDialog(backgroundPanel, "Player 2 will be " + type + ".",
                     "Player Two", JOptionPane.INFORMATION_MESSAGE);
+            Startup.introMusic.stop();
             frame.dispose();
+            currentClip = theme;
+            theme.loop(Clip.LOOP_CONTINUOUSLY);
+            theme.start();
             gameFrame();
         }
     }
-    public void gameFrame() throws IOException {
+    public void gameFrame() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         game = new JFrame();
         game.setSize(1920, 1080);
         game.setResizable(false);
@@ -145,18 +162,23 @@ public class Game {
         game.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                Startup main = new Startup();
+                try {
+                    currentClip.stop();
+                    Startup main = new Startup();
+                } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         switch (playerOne) {
             case "melee" -> charOne = new Melee(game);
             case "ranged" -> charOne = new Ranged(game);
-            case "support" -> charOne = new Support(game);
+            case "support" -> charOne = new Support(game, characters);
         }
         switch (playerTwo) {
             case "melee" -> charTwo = new Melee(game);
             case "ranged" -> charTwo = new Ranged(game);
-            case "support" -> charTwo = new Support(game);
+            case "support" -> charTwo = new Support(game, characters);
         }
         game.addKeyListener(new KeyAdapter() {
             @Override
@@ -189,15 +211,23 @@ public class Game {
         gameBackgroundPanel.repaint();
         gameLoop();
     }
-    public void gameLoop() {
+    public void gameLoop() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         if (!game.isShowing()) {
+            System.out.println("Game loop stopped: window not showing or not running.");
             return;
         }
         for (Character character : characters) {
-            character.checkHp();
-            monster.checkHp();
-//            System.out.println("Character: " + character + " Hp: " + character.checkHp());
-            System.out.println("Monster Hp: " + monster.checkHp());
+            if (character.checkHp() <= 0 || monster.checkHp() <= 0) {
+                if (character.checkHp() <= 0) {
+                    triumph = false;
+                    System.out.println("Character HP is zero. Stopping game loop.");
+                } else if (monster.checkHp() <= 0) {
+                    triumph = true;
+                    System.out.println("Monster HP is zero. Stopping game loop.");
+                }
+                endGame();
+                return;
+            }
             character.movement();
             monster.dmgTaken(character, character.returnDamage());
         }
@@ -207,10 +237,45 @@ public class Game {
         Timer timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameLoop();
+                try {
+                    gameLoop();
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         timer.setRepeats(false);
         timer.start();
+    }
+    public void endGame() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        theme.stop();
+        for (Character character : characters) {
+            game.removeKeyListener(character);
+        }
+        JLabel end = new JLabel();
+        end.setSize(1920, 1080);
+        end.setLocation((game.getWidth() - end.getWidth()) / 2, (game.getHeight() - end.getHeight()) / 2);
+        end.setOpaque(false);
+        if (triumph) {
+            Clip triumphMusic = AudioSystem.getClip();
+            triumphMusic.open(AudioSystem.getAudioInputStream(new File("Images/Audio/Triumph Music.wav")));
+            currentClip = triumphMusic;
+            triumphMusic.loop(Clip.LOOP_CONTINUOUSLY);
+            triumphMusic.start();
+            end.setIcon(new ImageIcon(new ImageIcon("Images/Words/Triumph.png")
+                    .getImage().getScaledInstance(end.getWidth(), end.getHeight(), Image.SCALE_SMOOTH)));
+        } else {
+            Clip defeatMusic = AudioSystem.getClip();
+            defeatMusic.open(AudioSystem.getAudioInputStream(new File("Images/Audio/Defeat Music.wav")));
+            currentClip = defeatMusic;
+            defeatMusic.loop(Clip.LOOP_CONTINUOUSLY);
+            defeatMusic.start();
+            end.setIcon(new ImageIcon(new ImageIcon("Images/Words/Defeat.png")
+                    .getImage().getScaledInstance(end.getWidth(), end.getHeight(), Image.SCALE_SMOOTH)));
+        }
+        gameBackgroundPanel.add(end);
+        gameBackgroundPanel.setComponentZOrder(end, 0);
+        gameBackgroundPanel.revalidate();
+        gameBackgroundPanel.repaint();
     }
 }
