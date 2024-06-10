@@ -7,7 +7,6 @@ import java.io.IOException;
 public class Melee extends Character {
     private int code;
     private int normalDmg = 25, skillDmg = 50;
-
     public Melee(JFrame frame) throws IOException {
         super(frame);
         System.out.println("Melee spawned");
@@ -18,6 +17,7 @@ public class Melee extends Character {
         attack2 = scaleImage(ImageIO.read(new File("Images/Melee/Shuriken (1).png")));
         skill1 = scaleImage(ImageIO.read(new File("Images/Melee/Shuriken Skill.png")));
         skill2 = scaleImage(ImageIO.read(new File("Images/Melee/Shuriken Skill (1).png")));
+        width = 128; height = 128;
         animate(normal, normal, 1);
     }
     @Override
@@ -64,7 +64,6 @@ public class Melee extends Character {
             delayFromSkill(normal, normal, 2000,1);
         }
         if (code == KeyEvent.VK_SPACE) {
-            attack = false;
             delayFromAttack(normal, normal, 2000,1);
         }
     }
