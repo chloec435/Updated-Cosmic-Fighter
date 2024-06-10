@@ -3,9 +3,6 @@ import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Ranged extends Character {
     private int code;
@@ -15,11 +12,11 @@ public class Ranged extends Character {
         System.out.println("Ranged spawned");
         addKeyListener(this);
         setFocusable(true);
-        normal = ImageIO.read(new File("Images/Ranged/Ranged.png"));
-        attack1 = ImageIO.read(new File("Images/Ranged/Ranged.png"));
-        attack2 = ImageIO.read(new File("Images/Ranged/Ranged (1).png"));
-        skill1 = ImageIO.read(new File("Images/Ranged/Ranged AOE.png"));
-        skill2 = ImageIO.read(new File("Images/Ranged/Ranged AOE (1).png"));
+        normal = scaleImage(ImageIO.read(new File("Images/Ranged/Ranged.png")));
+        attack1 = scaleImage(ImageIO.read(new File("Images/Ranged/Ranged.png")));
+        attack2 = scaleImage(ImageIO.read(new File("Images/Ranged/Ranged (1).png")));
+        skill1 = scaleImage(ImageIO.read(new File("Images/Ranged/Ranged AOE.png")));
+        skill2 = scaleImage(ImageIO.read(new File("Images/Ranged/Ranged AOE (1).png")));
         animate(normal, normal, 1);
     }
     @Override
