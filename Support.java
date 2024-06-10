@@ -12,11 +12,10 @@ public class Support extends Character {
         System.out.println("Support spawned");
         addKeyListener(this);
         setFocusable(true);
-        normal = ImageIO.read(new File("Images/Support/Support.png"));
-        attack1 = ImageIO.read(new File("Images/Support/Support.png"));
-        attack2 = ImageIO.read(new File("Images/Support/Support (1).png"));
-        skill1 = ImageIO.read(new File("Images/Support/Support Heal.png"));
-        skill2 = ImageIO.read(new File("Images/Support/Support (1).png"));
+        attack1 = scaleImage(ImageIO.read(new File("Images/Support/Support.png")));
+        attack2 = scaleImage(ImageIO.read(new File("Images/Support/Support (1).png")));
+        skill1 = scaleImage(ImageIO.read(new File("Images/Support/Support Heal.png")));
+        skill2 = scaleImage(ImageIO.read(new File("Images/Support/Support (1).png")));
         animate(normal, normal, 1);
     }
     @Override
