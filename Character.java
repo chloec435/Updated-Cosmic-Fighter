@@ -30,26 +30,20 @@ public abstract class Character extends JLabel implements KeyListener {
         setLayout(null);
         setSize(frame.getWidth(), frame.getHeight());
         setLocation(xPos, yPos);
-        System.out.println(frame.getWidth());
-        System.out.println(frame.getHeight());
         setVisible(true);
     }
     public void movement() {
         if (forward && yPos >= 0) {
             yPos -= yDir * moveSpeed;
-            System.out.println("forward");
         }
         if (back && yPos <= 455) {
             yPos += yDir * moveSpeed;
-            System.out.println("backwards");
         }
         if (left && xPos >= 0) {
             xPos -= xDir * moveSpeed;
-            System.out.println("left");
         }
         if (right && xPos <= 890) {
             xPos += xDir * moveSpeed;
-            System.out.println("right");
         }
         if (forward || back || left || right) {
             setLocation(xPos, yPos);
@@ -123,17 +117,12 @@ public abstract class Character extends JLabel implements KeyListener {
             animate(attack1, attack2, frames);
         }
     }
-    public void dmgTaken(Character other, int dmgTaken) {
-        Timer checkCollision = new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (isTouching(other)) {
-                    hp -= dmgTaken;
-                }
-            }
-        });
-        checkCollision.start();
-    }
+//    public void dmgTaken(Character other, int dmgTaken) {
+//        if (isTouching(other)) {
+//            hp -= dmgTaken;
+//            System.out.println("Damage taken: " + dmgTaken + ", Current HP: " + hp);
+//        }
+//    }
     public double checkHp() {
         if (this.hp <= 0) {
             frame.remove(this);
@@ -145,7 +134,9 @@ public abstract class Character extends JLabel implements KeyListener {
                 currentImage.getHeight(null));
     }
     public boolean isTouching(Character other) {
-        return this.getBoundingBox().intersects(other.getBoundingBox());
+        boolean touching = getBoundingBox().intersects(other.getBoundingBox());
+        System.out.println("Collision detected: " + touching);
+        return touching;
     }
     public int returnDamage() {
         return dmg;
@@ -167,8 +158,12 @@ public abstract class Character extends JLabel implements KeyListener {
     public void keyTyped(KeyEvent e) {
         handleKeyTyped(e);
     }
+    protected Image scaleImage(Image image) {
+        return image.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
+    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(currentImage, xPos, yPos, 128, 128, null);
+        g.drawImage(currentImage, xPos, yPos, currentImage.getWidth(null),
+                currentImage.getHeight(null), null);
     }
 }
