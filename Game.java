@@ -1,6 +1,13 @@
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import java.awt.Graphics;
+import javax.swing.WindowConstants;
+import java.awt.Dimension;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.Timer;
+import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -142,6 +149,7 @@ public class Game {
             }
         });
         monster = new Monster(game);
+//        characters.add(monster);
         gameBackgroundPanel.add(monster);
         switch (playerOne) {
             case "melee" -> charOne = new Melee(game);
@@ -188,13 +196,19 @@ public class Game {
         if (!game.isShowing()) {
             return;
         }
-        monster.startAttackTimer();
-        monster.path();
+//        monster.startAttackTimer();
+//        monster.path();
         for (Character character : characters) {
+            character.checkHp();
+            monster.checkHp();
+            System.out.println(character.checkHp());
+            System.out.println(monster.checkHp());
             character.movement();
-            character.dmgTaken(monster, monster.returnDamage());
-            monster.dmgTaken(character, character.returnDamage());
+//            character.dmgTaken(monster, monster.returnDamage());
+//            monster.dmgTaken(character, character.returnDamage());
         }
+        monster.movement();
+        monster.attackPlayers(charOne, charTwo);
         gameBackgroundPanel.repaint();
         Timer timer = new Timer(10, new ActionListener() {
             @Override
