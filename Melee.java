@@ -13,11 +13,11 @@ public class Melee extends Character {
         System.out.println("Melee spawned");
         addKeyListener(this);
         setFocusable(true);
-        normal = ImageIO.read(new File("Images/Melee/Shuriken.png"));
-        attack1 = ImageIO.read(new File("Images/Melee/Shuriken.png"));
-        attack2 = ImageIO.read(new File("Images/Melee/Shuriken (1).png"));
-        skill1 = ImageIO.read(new File("Images/Melee/Shuriken Skill.png"));
-        skill2 = ImageIO.read(new File("Images/Melee/Shuriken Skill (1).png"));
+        normal = scaleImage(ImageIO.read(new File("Images/Melee/Shuriken.png")));
+        attack1 = scaleImage(ImageIO.read(new File("Images/Melee/Shuriken.png")));
+        attack2 = scaleImage(ImageIO.read(new File("Images/Melee/Shuriken (1).png")));
+        skill1 = scaleImage(ImageIO.read(new File("Images/Melee/Shuriken Skill.png")));
+        skill2 = scaleImage(ImageIO.read(new File("Images/Melee/Shuriken Skill (1).png")));
         animate(normal, normal, 1);
     }
     @Override
