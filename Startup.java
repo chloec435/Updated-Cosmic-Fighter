@@ -15,6 +15,8 @@ public class Startup extends JFrame {
 //    private JButton help;
     private JLabel title;
     private JPanel backgroundPanel;
+    private int screen_width = 1400;
+    private int screen_length = 840;
     public static Clip introMusic;
     public Startup() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         startingScreen();
@@ -26,7 +28,7 @@ public class Startup extends JFrame {
         introMusic.start();
     }
     public void startingScreen() throws IOException {
-        setSize(1920,1080);
+        setSize(screen_width,screen_length);
         SpringLayout layout = new SpringLayout();
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -39,19 +41,22 @@ public class Startup extends JFrame {
                 g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        backgroundPanel.setPreferredSize(new Dimension(1920, 1080));
+        backgroundPanel.setPreferredSize(new Dimension(screen_width, screen_length));
         backgroundPanel.setLayout(layout);
 
         title = new JLabel();
-        title.setPreferredSize(new Dimension(1920,850));
+        int title_length = screen_length / 2 + screen_length / 3;
+        title.setPreferredSize(new Dimension(screen_width, title_length));
         ImageIcon TITLE = new ImageIcon(new ImageIcon("Images/Words/Cosmic Fighter.png")
-                .getImage().getScaledInstance(1920,1000, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(screen_width, title_length, Image.SCALE_SMOOTH));
         title.setIcon(TITLE);
         title.setOpaque(false);
         play = new JButton(); //creating play button
-        play.setPreferredSize(new Dimension(500,100));
+        int play_width = 500;
+        int play_height = 100;
+        play.setPreferredSize(new Dimension(play_width,play_height));
         ImageIcon PLAY = new ImageIcon(new ImageIcon("Images/Play.png")
-                .getImage().getScaledInstance(500,100, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(play_width,play_height, Image.SCALE_SMOOTH));
         play.setIcon(PLAY);
         play.setBorderPainted(false);
         play.setOpaque(false);
@@ -61,7 +66,7 @@ public class Startup extends JFrame {
         layout.putConstraint(SpringLayout.WEST, title, 0, SpringLayout.WEST, getContentPane());
         layout.putConstraint(SpringLayout.NORTH, title, 10, SpringLayout.NORTH, getContentPane());
         layout.putConstraint(SpringLayout.WEST, play, (getWidth()-500)/2, SpringLayout.WEST, getContentPane());
-        layout.putConstraint(SpringLayout.NORTH, play, 900, SpringLayout.NORTH, title);
+        layout.putConstraint(SpringLayout.NORTH, play, 300, SpringLayout.NORTH, title);
         add(backgroundPanel);
     }
     public void play() {

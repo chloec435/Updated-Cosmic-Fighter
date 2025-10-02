@@ -28,6 +28,8 @@ public class Game {
     private Clip theme, currentClip;
     private Monster monster;
     private boolean triumph = true, running = true;
+    private int screen_width = 1400;
+    private int screen_length = 840;
     private final ArrayList<Character> characters = new ArrayList<Character>();
     public Game() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         theme = AudioSystem.getClip();
@@ -49,7 +51,7 @@ public class Game {
     }
     public void frame() throws IOException {
         frame = new JFrame();
-        frame.setSize(1920, 1080);
+        frame.setSize(screen_width, screen_length);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -61,23 +63,28 @@ public class Game {
                 g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        backgroundPanel.setPreferredSize(new Dimension(1920, 1080));
+        backgroundPanel.setPreferredSize(new Dimension(screen_width, screen_length));
         backgroundPanel.setLayout(null);
     }
     public void selection() {
+        int char_xy = 500;
+        int choose_x = screen_width;
+        int choose_y = 150;
         JLabel melee = new JLabel(new ImageIcon(new ImageIcon("Images/Melee/Shuriken.png")
-                .getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH)));
+                .getImage().getScaledInstance(char_xy, char_xy, Image.SCALE_SMOOTH)));
         JLabel ranged = new JLabel(new ImageIcon(new ImageIcon("Images/Ranged/Ranged.png")
-                .getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH)));
+                .getImage().getScaledInstance(char_xy, char_xy, Image.SCALE_SMOOTH)));
         JLabel support = new JLabel(new ImageIcon(new ImageIcon("Images/Support/Support.png")
-                .getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH)));
+                .getImage().getScaledInstance(char_xy, char_xy, Image.SCALE_SMOOTH)));
         JLabel choose = new JLabel(new ImageIcon(new ImageIcon("Images/Words/choose char.png")
-                .getImage().getScaledInstance(1600, 150, Image.SCALE_SMOOTH)));
+                .getImage().getScaledInstance(choose_x, choose_y, Image.SCALE_SMOOTH)));
 
-        melee.setBounds(100, 300, 500, 500);
-        ranged.setBounds(700, 300, 500, 500);
-        support.setBounds(1300, 300, 500, 500);
-        choose.setBounds((frame.getWidth() - 1600) / 2, 100, 1600, 150);
+        int x_bounds = (screen_width - char_xy * 3) / 4;
+        int y_bounds = (screen_length - choose_y - char_xy);
+        melee.setBounds(x_bounds, y_bounds, char_xy, char_xy);
+        ranged.setBounds(x_bounds * 2 + char_xy, y_bounds, char_xy, char_xy);
+        support.setBounds(x_bounds * 3 + char_xy * 2, y_bounds, char_xy, char_xy);
+        choose.setBounds((frame.getWidth() - choose_x) / 2, 300, choose_x, choose_y);
 
         backgroundPanel.add(melee);
         backgroundPanel.add(ranged);
@@ -145,7 +152,7 @@ public class Game {
     }
     public void gameFrame() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         game = new JFrame();
-        game.setSize(1920, 1080);
+        game.setSize(screen_width, screen_length);
         game.setResizable(false);
         game.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         game.setLocationRelativeTo(null);
@@ -156,7 +163,7 @@ public class Game {
                 g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        gameBackgroundPanel.setPreferredSize(new Dimension(1920, 1080));
+        gameBackgroundPanel.setPreferredSize(new Dimension(screen_width, screen_length));
         gameBackgroundPanel.setLayout(null);
         game.setVisible(true);
         game.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -253,7 +260,7 @@ public class Game {
             game.removeKeyListener(character);
         }
         JLabel end = new JLabel();
-        end.setSize(1920, 1080);
+        end.setSize(screen_width, screen_length);
         end.setLocation((game.getWidth() - end.getWidth()) / 2, (game.getHeight() - end.getHeight()) / 2);
         end.setOpaque(false);
         if (triumph) {
